@@ -1,32 +1,46 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'dart:developer' as devtools show log;
+import 'package:http/http.dart' as http;
+import 'package:meta/meta.dart';
 
 extension Log on Object {
   void log() => devtools.log(toString());
 }
 
-abstract class Animall {
-  const Animall();
-}
+// Create a mixin for making GET requests
+mixin CanMakeGetCall {
+  String get url;
 
-mixin CanRun on Animall {
-  int get speed;
-  void running() {
-    "Speed is $speed".log();
+  @useResult
+  Future<String> getString() async {
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        return response.body;
+      } else {
+        return 'Failed to load data: ${response.statusCode}';
+      }
+    } catch (e) {
+      "Error: $e".log(); // Log the error
+      return 'Failed to get data';
+    }
   }
 }
 
-class Cat extends Animall with CanRun {
+// Create a class for consuming the API
+@immutable
+class GetPeaple with CanMakeGetCall {
+  const GetPeaple();
+
   @override
-  int speed = 10;
+  String get url => 'http://127.0.0.1:5500/apis/peaple.json';
 }
 
-void test() {
-  final cat = Cat();
-  cat.speed.log();
-  cat.running();
-  cat.speed = 20;
-  cat.speed.log();
+void test() async {
+  final peaple = await const GetPeaple().getString();
+  peaple.log();
 }
 
 void main() {
