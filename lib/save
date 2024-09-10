@@ -1,0 +1,76 @@
+// // ignore_for_file: depend_on_referenced_packages
+
+// import 'package:flutter/material.dart';
+// import 'dart:developer' as devtools show log;
+// import 'package:http/http.dart' as http;
+// import 'package:meta/meta.dart';
+
+// extension Log on Object {
+//   void log() => devtools.log(toString());
+// }
+
+// // Create a mixin for making GET requests
+// mixin CanMakeGetCall {
+//   String get url;
+
+//   @useResult
+//   Future<String> getString() async {
+//     try {
+//       final response = await http.get(Uri.parse(url));
+//       if (response.statusCode == 200) {
+//         return response.body;
+//       } else {
+//         return 'Failed to load data: ${response.statusCode}';
+//       }
+//     } catch (e) {
+//       "Error: $e".log(); // Log the error
+//       return 'Failed to get data';
+//     }
+//   }
+// }
+
+// // Create a class for consuming the API
+// @immutable
+// class GetPeaple with CanMakeGetCall {
+//   const GetPeaple();
+
+//   @override
+//   String get url => 'http://127.0.0.1:5500/apis/peaple.json';
+// }
+
+// void test() async {
+//   final peaple = await const GetPeaple().getString();
+//   peaple.log();
+// }
+
+// void main() {
+//   runApp(
+//     MaterialApp(
+//       title: "abstract in dart",
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//       ),
+//       debugShowCheckedModeBanner: false,
+//       home: const HomePage(),
+//     ),
+//   );
+// }
+
+// class HomePage extends StatelessWidget {
+//   const HomePage({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     test();
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text(
+//           "Abstract Methods",
+//           style: TextStyle(
+//             color: Colors.white,
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
