@@ -5,14 +5,18 @@ extension Log on Object {
   void log() => devtools.log(toString());
 }
 
-mixin CanRun {
+abstract class Animall {
+  const Animall();
+}
+
+mixin CanRun on Animall {
   int get speed;
   void running() {
     "Speed is $speed".log();
   }
 }
 
-class Cat with CanRun {
+class Cat extends Animall with CanRun {
   @override
   int speed = 10;
 }
